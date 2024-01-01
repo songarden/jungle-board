@@ -18,7 +18,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long commentId;
+    private Integer commentId;
 
     @Column(name = "comment_content", nullable = false)
     private String commentContent;
@@ -27,13 +27,14 @@ public class Comment {
     private String commentUser;
 
     @Column(name = "comment_board")
-    private Long commentBoard;
+    private Integer commentBoard;
 
     @CreatedDate
     @Column(name = "comment_date")
     private LocalDateTime commentDate;
 
-    public Comment(Long commentId, String commentContent, String commentUser, Long commentBoard, LocalDateTime commentDate) {
+    @Builder
+    public Comment(Integer commentId, String commentContent, String commentUser, Integer commentBoard, LocalDateTime commentDate) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.commentUser = commentUser;

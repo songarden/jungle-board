@@ -23,15 +23,20 @@ public class User {
     @Id
     @Column(name = "member_id")
     private String memberId;
+
     @Column(name = "user_id")
     private String userId;
+
     @JsonIgnore
     @Column(name = "user_info")
     private String userInfo;
+
     @Column(name = "user_name")
     private String userName;
+
     @Column(name = "user_email")
     private String userEmail;
+
     @Column(name = "user_roles")
     private String userRoles;
 
@@ -43,13 +48,5 @@ public class User {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userRoles = userRoles;
-    }
-
-    public List<String> getRoleList(){
-
-        if(this.userRoles != null && this.userRoles.length() > 0){
-            return Arrays.asList(this.userRoles.split(","));
-        }
-        return new ArrayList<>();
     }
 }
