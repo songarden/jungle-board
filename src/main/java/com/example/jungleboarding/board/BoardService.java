@@ -55,7 +55,7 @@ public class BoardService {
             return ResponseStatus.NOT_FOUND;
         }
         BoardDto updateBoardDto = new BoardDto(checkBoard.get());
-        if(updateBoardDto.boardUser != memberId){
+        if(!updateBoardDto.boardUser.equals(memberId)){
             return ResponseStatus.NOT_ACCEPTABLE;
         }
         updateBoardDto.setBoardName(boardDto.boardName);
@@ -77,7 +77,7 @@ public class BoardService {
             return ResponseStatus.NOT_FOUND;
         }
         BoardDto updateBoardDto = new BoardDto(checkBoard.get());
-        if(updateBoardDto.boardUser != memberId){
+        if(!updateBoardDto.boardUser.equals(memberId)){
             return ResponseStatus.NOT_ACCEPTABLE;
         }
         BoardDto deleteBoardDto = new BoardDto(checkBoard.get());

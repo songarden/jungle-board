@@ -23,7 +23,7 @@ public class BoardController {
     }
 
     @ResponseBody
-    @GetMapping("/board/board-id")
+    @GetMapping("/board-id")
     public Response<BoardDto> apiGetBoardByBoardId(@RequestParam("v") Integer boardId){
         BoardDto boardDto = boardService.getBoardByBoardId(boardId);
         ResponseStatus findResponse = ResponseStatus.FOUND;
@@ -34,7 +34,7 @@ public class BoardController {
     }
 
     @ResponseBody
-    @PostMapping("/board/{memberId}")
+    @PostMapping("/{memberId}")
     public  Response<Integer> apiCreateBoard(@PathVariable("memberId") String memberId
             ,@RequestBody BoardDto boardDto){
         ResponseStatus createResponse = boardService.createBoard(memberId, boardDto);
@@ -42,7 +42,7 @@ public class BoardController {
     }
 
     @ResponseBody
-    @PutMapping("/board/{memberId}/board-id")
+    @PutMapping("/{memberId}/board-id")
     public Response<Integer> apiUpdateBoard(@PathVariable("memberId") String memberId,
             @RequestParam("v") Integer boardId, @RequestBody BoardDto boardDto){
         ResponseStatus updateResponse = boardService.updateBoard(memberId,boardId,boardDto);
@@ -51,7 +51,7 @@ public class BoardController {
     }
 
     @ResponseBody
-    @DeleteMapping("/board/{memberId}/board-id")
+    @DeleteMapping("/{memberId}/board-id")
     public Response<Integer> apiDeleteBoard(@PathVariable("memberId") String memberId,
                                             @RequestParam("v") Integer boardId){
         ResponseStatus deleteResponse = boardService.deleteBoard(memberId,boardId);

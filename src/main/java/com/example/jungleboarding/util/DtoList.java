@@ -21,7 +21,8 @@ public class DtoList<E> extends ArrayList implements DataTransferObject, Respons
 
 
     @Override
-    public Object toEntity() {
+    public Object toEntity()
+    {
         return null;
     }
 
