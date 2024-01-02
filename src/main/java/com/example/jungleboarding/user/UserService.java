@@ -32,6 +32,57 @@ public class UserService {
         else{
             return ResponseStatus.CREATE_FAIL;
         }
+    }
+
+
+    public UserDto updateUser(String memberId, UserDto userDto) {
+        Optional<User> checkUpdateUser = userRepository.findById(memberId);
+        if(checkUpdateUser.isEmpty()){
+            return null;
+        }
+        if(userDto.getMemberId() != memberId){
+            return null;
+        }
+        Optional<User> checkValidUserId = userRepository.findByUserId(userDto.getUserId());
+        if(checkValidUserId.isPresent()){
+            return null;
+        }
+
+        UserDto updateUser = new UserDto(checkUpdateUser.get());
+        if(userDto.userId != null){
+            updateUser.setUserId(userDto.userId);
+        }
+        if(userDto.userEmail != null){
+            updateUser.setUserEmail(userDto.userEmail);
+        }
+        if(userDto.userInfo != null){
+            updateUser.setUserInfo(userDto.userInfo);
+        }
+
+        userRepository.save(updateUser.toEntity());
+
+        return updateUser;
+
 
     }
+
+    public UserDto deleteUser(String memberId) {
+        Optional<User> checkDeleteUser = userRepository.findById(memberId);
+        if(checkDeleteUser.isEmpty()){
+            return null;
+        }
+        UserDto deleteUser = new UserDto(checkDeleteUser.get());
+        userRepository.delete(deleteUser.toEntity());
+
+        return deleteUser;
+    }
+
+    /* database 초기화용 Service */
+    public ResponseStatus deleteAllUser() {
+        userRepository.deleteAll();
+
+        return ResponseStatus.OK;
+    }
+
+
 }
