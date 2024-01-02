@@ -16,8 +16,8 @@ public class UserService {
 
 
     public DtoList<UserDto> getAllUsers() {
-        DtoList<UserDto> allUserList = new DtoList<>(userRepository.findAll());
-        return allUserList;
+        DtoList<UserDto> allUserDtoList = new DtoList<>(userRepository.findAll());
+        return allUserDtoList;
     }
 
     public ResponseStatus createUser(UserDto userDto) {

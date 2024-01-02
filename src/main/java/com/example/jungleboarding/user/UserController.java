@@ -8,24 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     UserService userService;
 
     @ResponseBody
-    @GetMapping("/users")
+    @GetMapping("")
     public Response<UserDto> apiGetUsers() {
-        DtoList<UserDto> users = userService.getAllUsers();
-        return users.toResponse();
+        DtoList<UserDto> allUsers = userService.getAllUsers();
+        return allUsers.toResponse();
     }
 
     @ResponseBody
     @PostMapping("/user")
     public Response<Integer> apiCreateUser(@RequestBody UserDto userDto) {
-        ResponseStatus createStatus = userService.createUser(userDto);
+        ResponseStatus createResponse = userService.createUser(userDto);
 
-        return new ResponseDto<Integer>(createStatus, createStatus.getCode()).toResponse();
+        return new ResponseDto<Integer>(createResponse, createResponse.getCode()).toResponse();
 
     }
 
@@ -33,12 +33,12 @@ public class UserController {
     @PutMapping("/user/{memberId}")
     public Response<UserDto> apiUpdateUser(@PathVariable("memberId") String memberId, @RequestBody UserDto userDto) {
         UserDto updateUserDto = userService.updateUser(memberId, userDto);
-        ResponseStatus responseStatus = ResponseStatus.OK;
+        ResponseStatus updateResponse = ResponseStatus.OK;
         if (updateUserDto == null) {
-            responseStatus = ResponseStatus.NOT_FOUND;
+            updateResponse = ResponseStatus.NOT_FOUND;
         }
 
-        return new ResponseDto<UserDto>(responseStatus, updateUserDto).toResponse();
+        return new ResponseDto<UserDto>(updateResponse, updateUserDto).toResponse();
     }
 
     @ResponseBody
@@ -46,23 +46,23 @@ public class UserController {
     public Response<UserDto> apiDeleteUser(@PathVariable("memberId") String memberId){
         UserDto deleteUserDto = userService.deleteUser(memberId);
 
-        ResponseStatus responseStatus = ResponseStatus.OK;
+        ResponseStatus deleteResponse = ResponseStatus.OK;
         if(deleteUserDto == null){
-            responseStatus = ResponseStatus.NOT_FOUND;
+            deleteResponse = ResponseStatus.NOT_FOUND;
         }
 
-        return new ResponseDto<UserDto>(responseStatus,deleteUserDto).toResponse();
+        return new ResponseDto<UserDto>(deleteResponse,deleteUserDto).toResponse();
     }
 
     /*
-     * database 초기화용 Service
+     * database 초기화용 API
      */
     @ResponseBody
     @DeleteMapping("/users")
     public Response<Integer> apiDeleteAllUser(){
-        ResponseStatus deleteResponseStatus = userService.deleteAllUser();
+        ResponseStatus deleteResponse = userService.deleteAllUser();
 
-        return new ResponseDto<Integer>(deleteResponseStatus,deleteResponseStatus.getCode()).toResponse();
+        return new ResponseDto<Integer>(deleteResponse,deleteResponse.getCode()).toResponse();
     }
 
 }

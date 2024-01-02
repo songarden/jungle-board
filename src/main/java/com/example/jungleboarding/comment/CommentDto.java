@@ -35,7 +35,7 @@ public class CommentDto implements DataTransferObject<Comment> {
     }
 
     @Override
-    public Comment toEntity() throws NoSuchAlgorithmException {
+    public Comment toEntity() {
         return Comment
                 .builder()
                 .commentId(this.commentId)

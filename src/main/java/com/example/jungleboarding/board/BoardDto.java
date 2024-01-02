@@ -41,7 +41,7 @@ public class BoardDto implements DataTransferObject<Board>  {
     }
 
     @Override
-    public Board toEntity() throws NoSuchAlgorithmException {
+    public Board toEntity() {
         return Board.builder()
                 .boardId(this.boardId)
                 .boardName(this.boardName)

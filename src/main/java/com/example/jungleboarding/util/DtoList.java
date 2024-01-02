@@ -21,7 +21,7 @@ public class DtoList<E> extends ArrayList implements DataTransferObject, Respons
 
 
     @Override
-    public Object toEntity() throws NoSuchAlgorithmException {
+    public Object toEntity() {
         return null;
     }
 
