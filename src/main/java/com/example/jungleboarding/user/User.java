@@ -6,14 +6,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 @Table(name = "user_table")
 @Getter
@@ -34,6 +30,7 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
+    @Email
     @Column(name = "user_email")
     private String userEmail;
 

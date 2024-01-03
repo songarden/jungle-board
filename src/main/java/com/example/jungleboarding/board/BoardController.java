@@ -1,5 +1,6 @@
 package com.example.jungleboarding.board;
 
+import com.example.jungleboarding.annotation.UserAuthorize;
 import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
 import com.example.jungleboarding.responce.ResponseStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/boards")
 @RestController
+@UserAuthorize
 public class BoardController {
     @Autowired
     BoardService boardService;

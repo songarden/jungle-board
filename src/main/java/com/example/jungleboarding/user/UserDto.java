@@ -1,9 +1,11 @@
 package com.example.jungleboarding.user;
 
 import com.example.jungleboarding.util.DataTransferObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -34,6 +36,12 @@ public class UserDto implements DataTransferObject<User> {
         this.userName = user.getUserName();
         this.userEmail = user.getUserEmail();
         this.userRoles = user.getUserRoles();
+    }
+
+    public UserDto userDtoResponse(){
+        UserDto userDto = this;
+        userDto.setUserInfo(null);
+        return userDto;
     }
 
     @Override

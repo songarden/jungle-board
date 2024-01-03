@@ -212,4 +212,5 @@ gradle-app.setting
 
 ### for Secure ###
 application.properties
+jwt.yml
 

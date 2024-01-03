@@ -3,6 +3,7 @@ package com.example.jungleboarding.user;
 import com.example.jungleboarding.responce.ResponseStatus;
 import com.example.jungleboarding.util.DtoList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,29 +21,14 @@ public class UserService {
         return allUserDtoList;
     }
 
-    public ResponseStatus createUser(UserDto userDto) {
-        UserDto createUser = userDto;
-        Optional<User> checkUser = userRepository.findByUserId(createUser.getUserId());
-        if(checkUser.isEmpty()){
-            createUser.setMemberId(UUID.randomUUID().toString().replace("-",""));
-            createUser.setUserRoles("USER");
-            userRepository.save(createUser.toEntity());
-            return ResponseStatus.CREATE_DONE;
-        }
-        else{
-            return ResponseStatus.CREATE_FAIL;
-        }
-    }
-
-
     public UserDto updateUser(String memberId, UserDto userDto) {
         Optional<User> checkUpdateUser = userRepository.findById(memberId);
         if(checkUpdateUser.isEmpty()){
             return null;
         }
-        if(userDto.getMemberId() != memberId){
-            return null;
-        }
+//        if(!userDto.getMemberId().equals(memberId)){
+//            return null;
+//        } //옳지 않음
         Optional<User> checkValidUserId = userRepository.findByUserId(userDto.getUserId());
         if(checkValidUserId.isPresent()){
             return null;
@@ -56,14 +42,12 @@ public class UserService {
             updateUser.setUserEmail(userDto.userEmail);
         }
         if(userDto.userInfo != null){
-            updateUser.setUserInfo(userDto.userInfo);
+            updateUser.setUserInfo(new BCryptPasswordEncoder().encode(userDto.userInfo));
         }
 
         userRepository.save(updateUser.toEntity());
 
         return updateUser;
-
-
     }
 
     public UserDto deleteUser(String memberId) {
@@ -83,6 +67,4 @@ public class UserService {
 
         return ResponseStatus.OK;
     }
-
-
 }

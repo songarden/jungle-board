@@ -1,5 +1,6 @@
 package com.example.jungleboarding.comment;
 
+import com.example.jungleboarding.annotation.UserAuthorize;
 import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
 import com.example.jungleboarding.responce.ResponseStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cmts")
+@UserAuthorize
 public class CommentController {
 
     @Autowired

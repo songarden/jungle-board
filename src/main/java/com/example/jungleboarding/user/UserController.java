@@ -1,5 +1,6 @@
 package com.example.jungleboarding.user;
 
+import com.example.jungleboarding.annotation.UserAuthorize;
 import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
 import com.example.jungleboarding.responce.ResponseStatus;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@UserAuthorize
 public class UserController {
+    
     @Autowired
     UserService userService;
 
@@ -21,16 +24,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/user")
-    public Response<Integer> apiCreateUser(@RequestBody UserDto userDto) {
-        ResponseStatus createResponse = userService.createUser(userDto);
-
-        return new ResponseDto<Integer>(createResponse, createResponse.getCode()).toResponse();
-
-    }
-
-    @ResponseBody
-    @PutMapping("/user/{memberId}")
+    @PutMapping("/{memberId}")
     public Response<UserDto> apiUpdateUser(@PathVariable("memberId") String memberId, @RequestBody UserDto userDto) {
         UserDto updateUserDto = userService.updateUser(memberId, userDto);
         ResponseStatus updateResponse = ResponseStatus.OK;
@@ -38,11 +32,11 @@ public class UserController {
             updateResponse = ResponseStatus.NOT_FOUND;
         }
 
-        return new ResponseDto<UserDto>(updateResponse, updateUserDto).toResponse();
+        return new ResponseDto<UserDto>(updateResponse, updateUserDto.userDtoResponse()).toResponse();
     }
 
     @ResponseBody
-    @DeleteMapping("/user/{memberId}")
+    @DeleteMapping("/{memberId}")
     public Response<UserDto> apiDeleteUser(@PathVariable("memberId") String memberId){
         UserDto deleteUserDto = userService.deleteUser(memberId);
 
@@ -51,14 +45,14 @@ public class UserController {
             deleteResponse = ResponseStatus.NOT_FOUND;
         }
 
-        return new ResponseDto<UserDto>(deleteResponse,deleteUserDto).toResponse();
+        return new ResponseDto<UserDto>(deleteResponse,deleteUserDto.userDtoResponse()).toResponse();
     }
 
     /*
      * database 초기화용 API
      */
     @ResponseBody
-    @DeleteMapping("/users")
+    @DeleteMapping("/")
     public Response<Integer> apiDeleteAllUser(){
         ResponseStatus deleteResponse = userService.deleteAllUser();
 
