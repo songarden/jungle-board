@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String accessToken = parseBearerToken(request, HttpHeaders.AUTHORIZATION);	// parseBearerToken() 변경에 따른 수정
             User user = parseUserSpecification(accessToken);
+            setBodyUserId(request,user.getUsername());
             AbstractAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(user, accessToken, user.getAuthorities());
             authenticated.setDetails(new WebAuthenticationDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticated);
@@ -78,5 +79,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }
+    }
+
+    private void setBodyUserId (HttpServletRequest request, String userId){
+        request.setAttribute("jwtUserId" , userId);
     }
 }

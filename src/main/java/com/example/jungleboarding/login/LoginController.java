@@ -1,5 +1,6 @@
 package com.example.jungleboarding.login;
 
+import com.example.jungleboarding.annotation.UserAuthorize;
 import com.example.jungleboarding.login.jwt.RefreshJwtToken;
 import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
@@ -8,7 +9,7 @@ import com.example.jungleboarding.user.UserDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/sign")
+@RequestMapping("/api")
 public class LoginController {
 
     private final LoginService loginService;
@@ -18,7 +19,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @PostMapping("/login")
+    @PostMapping("/sign/login")
     public Response<LoginResponse> apiLogin (@RequestBody UserDto userDto){
         LoginResponse loginResponse = loginService.login(userDto);
         ResponseStatus responseStatus = ResponseStatus.OK;
@@ -30,7 +31,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @PostMapping("/join")
+    @PostMapping("/sign/join")
     public Response<Integer> apiJoin(@RequestBody UserDto userDto) {
         ResponseStatus createResponse = loginService.createUser(userDto);
 
@@ -39,6 +40,7 @@ public class LoginController {
 
     @ResponseBody
     @DeleteMapping("/logout")
+    @UserAuthorize
     public Response<Integer> apiLogout(@RequestBody RefreshJwtToken refreshJwtToken){
         ResponseStatus logoutResponse = loginService.logout(refreshJwtToken);
 

@@ -5,6 +5,7 @@ import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
 import com.example.jungleboarding.responce.ResponseStatus;
 import com.example.jungleboarding.util.DtoList;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,17 @@ public class UserController {
     public Response<UserDto> apiGetUsers() {
         DtoList<UserDto> allUsers = userService.getAllUsers();
         return allUsers.toResponse();
+    }
+
+    @ResponseBody
+    @GetMapping("/{memberId}")
+    public Response<UserDto> apiGetUser(@PathVariable("memberId") String memberId){
+        UserDto userDto = userService.getUser(memberId);
+        if(userDto == null){
+            return new ResponseDto<UserDto>(ResponseStatus.NOT_FOUND,null).toResponse();
+        }
+
+        return new ResponseDto<UserDto>(ResponseStatus.OK,userDto).toResponse();
     }
 
     @ResponseBody
@@ -52,11 +64,20 @@ public class UserController {
      * database 초기화용 API
      */
     @ResponseBody
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public Response<Integer> apiDeleteAllUser(){
         ResponseStatus deleteResponse = userService.deleteAllUser();
 
         return new ResponseDto<Integer>(deleteResponse,deleteResponse.getCode()).toResponse();
+    }
+
+    @ResponseBody
+    @PutMapping("")
+    public Response<Integer> apiTest(HttpServletRequest request, @RequestBody UserDto userDto){
+        String userId = (String) request.getAttribute("jwtUserId");
+        String userName = userDto.userName;
+
+        return null;
     }
 
 }

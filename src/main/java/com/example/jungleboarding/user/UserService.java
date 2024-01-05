@@ -67,4 +67,14 @@ public class UserService {
 
         return ResponseStatus.OK;
     }
+
+    public UserDto getUser(String memberId) {
+        Optional<User> checkUser = userRepository.findById(memberId);
+        if(checkUser.isEmpty()){
+            return null;
+        }
+        UserDto userDto = new UserDto(checkUser.get());
+
+        return userDto;
+    }
 }

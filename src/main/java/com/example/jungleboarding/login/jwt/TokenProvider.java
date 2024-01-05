@@ -3,6 +3,7 @@ package com.example.jungleboarding.login.jwt;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.example.jungleboarding.login.auth.config;
+package com.example.jungleboarding.config;
 
 import com.example.jungleboarding.login.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;

@@ -68,6 +68,7 @@ public class LoginService {
         if(logoutToken.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
+
         refreshJwtTokenRepository.delete(logoutToken.get());
 
         return ResponseStatus.OK;
