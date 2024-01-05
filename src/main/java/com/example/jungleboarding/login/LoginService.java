@@ -62,4 +62,14 @@ public class LoginService {
             return ResponseStatus.CREATE_FAIL;
         }
     }
+
+    public ResponseStatus logout(RefreshJwtToken refreshJwtToken) {
+        Optional<RefreshJwtToken> logoutToken = refreshJwtTokenRepository.findByRefreshToken(refreshJwtToken);
+        if(logoutToken.isEmpty()){
+            return ResponseStatus.NOT_FOUND;
+        }
+        refreshJwtTokenRepository.delete(logoutToken.get());
+
+        return ResponseStatus.OK;
+    }
 }

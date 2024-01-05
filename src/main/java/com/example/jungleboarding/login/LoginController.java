@@ -1,5 +1,6 @@
 package com.example.jungleboarding.login;
 
+import com.example.jungleboarding.login.jwt.RefreshJwtToken;
 import com.example.jungleboarding.responce.Response;
 import com.example.jungleboarding.responce.ResponseDto;
 import com.example.jungleboarding.responce.ResponseStatus;
@@ -34,5 +35,13 @@ public class LoginController {
         ResponseStatus createResponse = loginService.createUser(userDto);
 
         return new ResponseDto<Integer>(createResponse, createResponse.getCode()).toResponse();
+    }
+
+    @ResponseBody
+    @DeleteMapping("/logout")
+    public Response<Integer> apiLogout(@RequestBody RefreshJwtToken refreshJwtToken){
+        ResponseStatus logoutResponse = loginService.logout(refreshJwtToken);
+
+        return new ResponseDto<Integer>(logoutResponse, logoutResponse.getCode()).toResponse();
     }
 }
