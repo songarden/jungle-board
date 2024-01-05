@@ -1,6 +1,8 @@
 package com.example.jungleboarding.login;
 
-import com.example.jungleboarding.jwt.TokenProvider;
+import com.example.jungleboarding.login.jwt.RefreshJwtToken;
+import com.example.jungleboarding.login.jwt.RefreshJwtTokenRepository;
+import com.example.jungleboarding.login.jwt.TokenProvider;
 import com.example.jungleboarding.responce.ResponseStatus;
 import com.example.jungleboarding.user.User;
 import com.example.jungleboarding.user.UserDto;
@@ -16,10 +18,13 @@ public class LoginService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
+    private final RefreshJwtTokenRepository refreshJwtTokenRepository;
 
-    public LoginService(UserRepository userRepository, TokenProvider tokenProvider) {
+
+    public LoginService(UserRepository userRepository, TokenProvider tokenProvider, RefreshJwtTokenRepository refreshJwtTokenRepository) {
         this.userRepository = userRepository;
         this.tokenProvider = tokenProvider;
+        this.refreshJwtTokenRepository = refreshJwtTokenRepository;
     }
 
     public LoginResponse login(UserDto userDto){
@@ -32,8 +37,15 @@ public class LoginService {
         if(new BCryptPasswordEncoder().matches(userDto.userInfo,loginUser.userInfo) == false){
             return null;
         }
-        String token = tokenProvider.createToken(String.format("%s:%s", loginUser.userId, loginUser.userRoles));
-        return new LoginResponse(loginUser.userId, loginUser.userRoles, token);
+        String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", loginUser.userId, loginUser.userRoles));
+        String refreshToken = tokenProvider.createRefreshToken();
+        RefreshJwtToken refreshJwtToken = new RefreshJwtToken(loginUser.memberId,loginUser.userId,refreshToken);
+        Optional<RefreshJwtToken> checkRefresh = refreshJwtTokenRepository.findById(loginUser.memberId);
+        if(checkRefresh.isPresent()){
+            refreshJwtToken.updateJwtToken(refreshToken);
+        }
+        refreshJwtTokenRepository.save(refreshJwtToken);
+        return new LoginResponse(loginUser.userId, loginUser.userRoles, accessToken,refreshToken);
     }
 
     public ResponseStatus createUser(UserDto userDto) {
