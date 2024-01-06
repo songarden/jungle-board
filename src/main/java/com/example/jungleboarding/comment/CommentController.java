@@ -17,23 +17,23 @@ public class CommentController {
     CommentService commentService;
 
     @ResponseBody
-    @GetMapping("/boards/{boardId}")
-    public Response<CommentDto> apiGetAllCmtByBoardId(@PathVariable("boardId") Integer boardId){
+    @GetMapping("/board-id")
+    public Response<CommentDto> apiGetAllCmtByBoardId(@RequestParam("v") Integer boardId){
         DtoList<CommentDto> cmtDtoList = commentService.getAllCmtByBoardId(boardId);
         return cmtDtoList.toResponse();
     }
 
     @ResponseBody
-    @GetMapping("/users/{memberId}")
-    public Response<CommentDto> apiGetAllCmtByUserId(@PathVariable("memberId") String memberId){
+    @GetMapping("/member-id")
+    public Response<CommentDto> apiGetAllCmtByUserId(@RequestParam("v") String memberId){
         DtoList<CommentDto> cmtDtoList = commentService.getAllCmtByUserId(memberId);
         return cmtDtoList.toResponse();
     }
 
     @ResponseBody
-    @PostMapping("/users/{memberId}/board-id")
-    public Response<Integer> apiCreateCmt(@PathVariable("memberId") String memberId,
-                                          @RequestParam("v") Integer boardId,
+    @PostMapping("/member-and-board")
+    public Response<Integer> apiCreateCmt(@RequestParam("v1") String memberId,
+                                          @RequestParam("v2") Integer boardId,
                                           @RequestBody CommentDto commentDto){
         ResponseStatus createResponse = commentService.createCmt(memberId,boardId,commentDto);
 
@@ -41,21 +41,17 @@ public class CommentController {
     }
 
     @ResponseBody
-    @PutMapping("/{commentId}/user-and-board")
-    public Response<Integer> apiUpdateCmt(@PathVariable("commentId") Integer commentId,
-                                          @RequestParam("v1") String memberId,
-                                          @RequestParam("v2") Integer boardId,
+    @PutMapping("/cmt-id")
+    public Response<Integer> apiUpdateCmt(@RequestParam("v") Integer commentId,
                                           @RequestBody CommentDto commentDto){
-        ResponseStatus updateResponse = commentService.updateCmt(commentId,memberId,boardId,commentDto);
+        ResponseStatus updateResponse = commentService.updateCmt(commentId,commentDto);
         return new ResponseDto<Integer>(updateResponse, updateResponse.getCode()).toResponse();
     }
 
     @ResponseBody
-    @DeleteMapping("/{commentId}/user-and-board")
-    public Response<Integer> apiDeleteCmt(@PathVariable("commentId") Integer commentId,
-                                          @RequestParam("v1") String memberId,
-                                          @RequestParam("v2") Integer boardId){
-        ResponseStatus deleteResponse = commentService.deleteCmt(commentId,memberId,boardId);
+    @DeleteMapping("/cmt-id")
+    public Response<Integer> apiDeleteCmt(@RequestParam("v") Integer commentId){
+        ResponseStatus deleteResponse = commentService.deleteCmt(commentId);
 
         return new ResponseDto<Integer>(deleteResponse, deleteResponse.getCode()).toResponse();
     }

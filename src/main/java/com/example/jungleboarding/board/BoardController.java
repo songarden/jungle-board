@@ -44,19 +44,18 @@ public class BoardController {
     }
 
     @ResponseBody
-    @PutMapping("/{memberId}/board-id")
-    public Response<Integer> apiUpdateBoard(@PathVariable("memberId") String memberId,
+    @PutMapping("/board-id")
+    public Response<Integer> apiUpdateBoard(
             @RequestParam("v") Integer boardId, @RequestBody BoardDto boardDto){
-        ResponseStatus updateResponse = boardService.updateBoard(memberId,boardId,boardDto);
+        ResponseStatus updateResponse = boardService.updateBoard(boardId,boardDto);
 
         return new ResponseDto<Integer>(updateResponse, updateResponse.getCode()).toResponse();
     }
 
     @ResponseBody
-    @DeleteMapping("/{memberId}/board-id")
-    public Response<Integer> apiDeleteBoard(@PathVariable("memberId") String memberId,
-                                            @RequestParam("v") Integer boardId){
-        ResponseStatus deleteResponse = boardService.deleteBoard(memberId,boardId);
+    @DeleteMapping("/board-id")
+    public Response<Integer> apiDeleteBoard(@RequestParam("v") Integer boardId){
+        ResponseStatus deleteResponse = boardService.deleteBoard(boardId);
 
         return new ResponseDto<Integer>(deleteResponse, deleteResponse.getCode()).toResponse();
     }

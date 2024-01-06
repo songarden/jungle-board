@@ -53,16 +53,8 @@ public class CommentService {
         return ResponseStatus.CREATE_DONE;
     }
 
-    public ResponseStatus updateCmt(Integer commentId, String memberId, Integer boardId, CommentDto commentDto) {
-        Optional<User> checkUser = userRepository.findById(memberId);
-        if(checkUser.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
-        Optional<Board> checkBoard = boardRepository.findById(boardId);
-        if(checkBoard.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
-        Optional<Comment> checkComment = commentRepository.findByCommentBoardAndCommentUser(boardId,memberId);
+    public ResponseStatus updateCmt(Integer commentId, CommentDto commentDto) {
+        Optional<Comment> checkComment = commentRepository.findById(commentId);
         if(checkComment.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
@@ -74,27 +66,12 @@ public class CommentService {
         return ResponseStatus.OK;
     }
 
-    public ResponseStatus deleteCmt(Integer commentId, String memberId, Integer boardId) {
-        Optional<User> checkUser = userRepository.findById(memberId);
-        if(checkUser.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
-        Optional<Board> checkBoard = boardRepository.findById(boardId);
-        if(checkBoard.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
+    public ResponseStatus deleteCmt(Integer commentId) {
         Optional<Comment> checkComment = commentRepository.findById(commentId);
         if(checkComment.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
         CommentDto deleteCmtDto = new CommentDto(checkComment.get());
-        BoardDto thisBoardDto = new BoardDto(checkBoard.get());
-        if(deleteCmtDto.commentBoard != thisBoardDto.boardId){
-            return ResponseStatus.NOT_ACCEPTABLE;
-        }
-        if(!deleteCmtDto.commentUser.equals(memberId) && !thisBoardDto.boardUser.equals(memberId)){
-            return ResponseStatus.NOT_ACCEPTABLE;
-        }
         commentRepository.delete(deleteCmtDto.toEntity());
 
         return ResponseStatus.OK;

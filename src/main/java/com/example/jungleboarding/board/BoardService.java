@@ -45,19 +45,12 @@ public class BoardService {
     }
 
     /* 수정된 게시물 내용을 그대로 대입 */
-    public ResponseStatus updateBoard(String memberId, Integer boardId, BoardDto boardDto) {
-        Optional<User> checkValidUser = userRepository.findById(memberId);
-        if(checkValidUser.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
+    public ResponseStatus updateBoard(Integer boardId, BoardDto boardDto) {
         Optional<Board> checkBoard = boardRepository.findById(boardId);
         if(checkBoard.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
         BoardDto updateBoardDto = new BoardDto(checkBoard.get());
-        if(!updateBoardDto.boardUser.equals(memberId)){
-            return ResponseStatus.NOT_ACCEPTABLE;
-        }
         updateBoardDto.setBoardName(boardDto.boardName);
         updateBoardDto.setBoardContent(boardDto.boardContent);
         updateBoardDto.setBoardDate(LocalDateTime.now());
@@ -67,18 +60,10 @@ public class BoardService {
         return ResponseStatus.OK;
     }
 
-    public ResponseStatus deleteBoard(String memberId, Integer boardId) {
-        Optional<User> checkValidUser = userRepository.findById(memberId);
-        if(checkValidUser.isEmpty()){
-            return ResponseStatus.NOT_FOUND;
-        }
+    public ResponseStatus deleteBoard(Integer boardId) {
         Optional<Board> checkBoard = boardRepository.findById(boardId);
         if(checkBoard.isEmpty()){
             return ResponseStatus.NOT_FOUND;
-        }
-        BoardDto updateBoardDto = new BoardDto(checkBoard.get());
-        if(!updateBoardDto.boardUser.equals(memberId)){
-            return ResponseStatus.NOT_ACCEPTABLE;
         }
         BoardDto deleteBoardDto = new BoardDto(checkBoard.get());
         boardRepository.delete(deleteBoardDto.toEntity());
