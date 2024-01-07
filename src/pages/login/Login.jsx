@@ -5,16 +5,16 @@ import './Login.css';
 import doLogin from '../../apis/loginApi';
 
 const Login = () => {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+
   const onChangeId = (e) => {
     setId(e.target.value);
   }
   const onChangePassword = (e) => {
-    setPassword(e.target.value);    
+    setPassword(e.target.value);
   }
 
   const handleLogin = async () => {
@@ -30,7 +30,7 @@ const Login = () => {
       if (accessToken && refreshToken) {
         localStorage.setItem('access', accessToken);
         localStorage.setItem('refresh', refreshToken);
-        navigate('/home', {replace: true});        
+        navigate('/home', { replace: true });
       } else {
         setError('로그인 실패: 잘못된 사용자 정보입니다.');
       }
@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <div className="Login">
       <h2>로그인 페이지</h2>
-     
+
       {error && (
         <Alert status="error 발생">
           <AlertIcon />
@@ -51,18 +51,22 @@ const Login = () => {
         </Alert>
       )}
 
-      <Input placeholder="ID를 입력하세요" value={id} onChange={onChangeId} />
-      <Input placeholder="PW를 입력하세요" type='password' value={password} onChange={onChangePassword} />      
-
       <div className='login-box'>
-        <Button id="login-btn-1" colorScheme='green'
+
+        <Input id='login-id-box' placeholder="ID를 입력하세요" backgroundColor={'white'}
+          value={id} onChange={onChangeId} />
+
+        <Input id='login-pw-box' placeholder="PW를 입력하세요" backgroundColor={'white'}
+          type='password' value={password} onChange={onChangePassword} />
+
+        <Button id="login-btn-1" colorScheme='purple'
           onClick={() => { navigate("/register") }}>
           회원가입
         </Button>
 
-        <Button id="login-btn-2" colorScheme='green'
+        <Button id="login-btn-2" colorScheme='purple'
           // onClick={() => {handleLogin}}>
-          onClick={() => {console.log(id, password)}}>
+          onClick={() => { console.log(id, password) }}>
           로그인
         </Button>
       </div>

@@ -6,7 +6,7 @@ const Header = () => {
 
     return (
         <div className="Header">
-            <Tabs align='end' variant='soft-rounded' colorScheme='green'>
+            <Tabs align='end' variant='soft-rounded' colorScheme='purple'>
                 <TabList>
                     <Tab onClick={()=>{console.log("clicked 1")}}>
                         글쓰기

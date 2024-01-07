@@ -4,11 +4,20 @@
 }
 
 .Login h2 {
+    color: white;
     padding: 40px;
     padding-top: 100px;
     font-size: 60px;
     font-weight: bolder;
     text-align: center;
+}
+
+#login-id-box {
+    margin-bottom: 20px;
+}
+
+#login-pw-box{
+    margin-bottom: 10px;
 }
 
 .login-box {
