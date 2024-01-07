@@ -1,6 +1,7 @@
 package com.example.jungleboarding.config;
 
 import com.example.jungleboarding.login.jwt.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
@@ -28,7 +34,18 @@ public class SecurityConfig {
         http
 //                .csrf(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.addAllowedOrigin("http://localhost:3000");
+                        config.setAllowCredentials(true);
+                        config.setAllowedMethods(Arrays.asList("*"));
+                        config.setAllowedHeaders(Arrays.asList("*"));
+                        config.setMaxAge(3600L); //1시간
+                        return config;
+                    }
+                }))
 //                .headers(headers -> headers.frameOptions(Customizer.withDefaults()))
                 .authorizeHttpRequests(authorize -> authorize
 //                                .anyRequest().permitAll()
