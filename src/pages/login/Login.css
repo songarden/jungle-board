@@ -1,0 +1,28 @@
+.Login {
+    margin: auto;
+    max-width: 650px;
+}
+
+.Login h2 {
+    padding: 40px;
+    padding-top: 100px;
+    font-size: 60px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.login-box {
+    width: 100%;
+    text-align: right; /* 버튼을 가운데 정렬 */
+}
+
+/* 기타 스타일 */
+
+
+#login-btn-1 {
+    margin: 10px;
+}
+
+#login-btn-1 {
+    margin: 10px;
+}
