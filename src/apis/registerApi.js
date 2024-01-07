@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const doRegister = async(id, password) => {
+const doRegister = async(id, password, name, email) => {
     try {
         const response = await axios.post('회원가입 URL', {
-            id,
-            password,
+            userId: id,
+            userInfo: password,
+            userName: name,
+            userEmail: email,
         });
         return response.data; // 서버 응답 반환
     } catch (error) {

@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Input, Button, Alert, AlertIcon } from '@chakra-ui/react';
+import {
+  Input,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react';
 import './Login.css';
 import doLogin from '../../apis/loginApi';
 
@@ -25,12 +32,15 @@ const Login = () => {
 
     try {
       const result = await doLogin(id, password);
-      const { accessToken, refreshToken } = result;
+      const { userId, userRoles, accessToken, refreshToken } = result.data;
 
+      // 로그인 성공
       if (accessToken && refreshToken) {
         localStorage.setItem('access', accessToken);
         localStorage.setItem('refresh', refreshToken);
+
         navigate('/home', { replace: true });
+        console.log('로그인 성공');
       } else {
         setError('로그인 실패: 잘못된 사용자 정보입니다.');
       }
@@ -40,16 +50,19 @@ const Login = () => {
     }
   }
 
+  useEffect(() => {
+    let timer;
+    if (error) {
+      timer = setTimeout(() => {
+        setError(''); // 2초 후에 다시 에러 상태를 돌린다
+      }, 2000); 
+    }
+    return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머도 정리
+  }, [error]);
+
   return (
     <div className="Login">
       <h2>로그인 페이지</h2>
-
-      {error && (
-        <Alert status="error 발생">
-          <AlertIcon />
-          {error}
-        </Alert>
-      )}
 
       <div className='login-box'>
 
@@ -59,16 +72,24 @@ const Login = () => {
         <Input id='login-pw-box' placeholder="PW를 입력하세요" backgroundColor={'white'}
           type='password' value={password} onChange={onChangePassword} />
 
+
         <Button id="login-btn-1" colorScheme='purple'
           onClick={() => { navigate("/register") }}>
           회원가입
         </Button>
 
         <Button id="login-btn-2" colorScheme='purple'
-          // onClick={() => {handleLogin}}>
-          onClick={() => { console.log(id, password) }}>
+          onClick={handleLogin}>
           로그인
         </Button>
+   
+        {error && (
+          <Alert status='error'>
+            <AlertIcon />
+            로그인에 실패했습니다. ID 또는 PW를 확인하세요.
+          </Alert>
+        )}
+
       </div>
     </div>
   );

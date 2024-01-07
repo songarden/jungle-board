@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const doLogin = async(id, password) => {
     try {
-        const response = await axios.post('로그인 url', {
-            id, 
-            password,
+        const response = await axios.post('api/sign/login', {
+            userId: id, 
+            userInfo: password,
         });
         return response.data; // 서버 응답 반환
     } catch (error) {
