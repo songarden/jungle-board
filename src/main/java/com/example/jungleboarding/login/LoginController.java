@@ -47,4 +47,13 @@ public class LoginController {
 
         return new ResponseDto<Integer>(logoutResponse, logoutResponse.getCode()).toResponse();
     }
+
+
+    @ResponseBody
+    @DeleteMapping("/sign/jwt-db-clear")
+    public Response<Integer> apiDeleteAllJwt(){
+        ResponseStatus delJwtRes = loginService.deleteAllJwt();
+
+        return new ResponseDto<Integer>(delJwtRes, delJwtRes.getCode()).toResponse();
+    }
 }

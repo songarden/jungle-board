@@ -15,13 +15,15 @@ public class CommentDto implements DataTransferObject<Comment> {
     public Integer commentId;
     public String commentContent;
     public String commentUser;
+    public String commentUserName;
     public Integer commentBoard;
     public LocalDateTime commentDate;
 
-    public CommentDto(Integer commentId, String commentContent, String commentUser, Integer commentBoard, LocalDateTime commentDate) {
+    public CommentDto(Integer commentId, String commentContent, String commentUser, String commentUserName, Integer commentBoard, LocalDateTime commentDate) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.commentUser = commentUser;
+        this.commentUserName = commentUserName;
         this.commentBoard = commentBoard;
         this.commentDate = commentDate;
     }
@@ -30,6 +32,7 @@ public class CommentDto implements DataTransferObject<Comment> {
         this.commentId = comment.getCommentId();
         this.commentContent = comment.getCommentContent();
         this.commentUser = comment.getCommentUser();
+        this.commentUserName = comment.getCommentUserName();
         this.commentBoard = comment.getCommentBoard();
         this.commentDate = comment.getCommentDate();
     }
@@ -41,6 +44,7 @@ public class CommentDto implements DataTransferObject<Comment> {
                 .commentId(this.commentId)
                 .commentContent(this.commentContent)
                 .commentUser(this.commentUser)
+                .commentUserName(this.commentUserName)
                 .commentBoard(this.commentBoard)
                 .commentDate(this.commentDate)
                 .build();
@@ -51,6 +55,7 @@ public class CommentDto implements DataTransferObject<Comment> {
         return new CommentDto(comment.getCommentId(),
                 comment.getCommentContent(),
                 comment.getCommentUser(),
+                comment.getCommentUserName(),
                 comment.getCommentBoard(),
                 comment.getCommentDate());
     }

@@ -5,12 +5,14 @@ import com.example.jungleboarding.board.BoardDto;
 import com.example.jungleboarding.board.BoardRepository;
 import com.example.jungleboarding.responce.ResponseStatus;
 import com.example.jungleboarding.user.User;
+import com.example.jungleboarding.user.UserDto;
 import com.example.jungleboarding.user.UserRepository;
 import com.example.jungleboarding.util.DtoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,8 +47,10 @@ public class CommentService {
         if(checkBoard.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
+        UserDto userDto = new UserDto(checkUser.get());
         commentDto.setCommentBoard(boardId);
         commentDto.setCommentUser(memberId);
+        commentDto.setCommentUserName(userDto.userName);
         commentDto.setCommentDate(LocalDateTime.now());
         commentRepository.save(commentDto.toEntity());
 

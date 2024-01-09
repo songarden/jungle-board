@@ -45,7 +45,7 @@ public class LoginService {
             refreshJwtToken.updateJwtToken(refreshToken);
         }
         refreshJwtTokenRepository.save(refreshJwtToken);
-        return new LoginResponse(loginUser.userId, loginUser.userRoles, accessToken,refreshToken);
+        return new LoginResponse(loginUser.memberId ,loginUser.userId, loginUser.userRoles, accessToken,refreshToken);
     }
 
     public ResponseStatus createUser(UserDto userDto) {
@@ -63,13 +63,20 @@ public class LoginService {
         }
     }
 
-    public ResponseStatus logout(RefreshJwtToken refreshJwtToken) {
-        Optional<RefreshJwtToken> logoutToken = refreshJwtTokenRepository.findByRefreshToken(refreshJwtToken);
-        if(logoutToken.isEmpty()){
+    public ResponseStatus logout(RefreshJwtToken jwtToken) {
+        String refreshToken = jwtToken.getRefreshToken();
+        Optional<RefreshJwtToken> checkToken = refreshJwtTokenRepository.findByRefreshToken(refreshToken);
+        if(checkToken.isEmpty()){
             return ResponseStatus.NOT_FOUND;
         }
+        RefreshJwtToken logoutToken = checkToken.get();
+        refreshJwtTokenRepository.delete(logoutToken);
 
-        refreshJwtTokenRepository.delete(logoutToken.get());
+        return ResponseStatus.OK;
+    }
+
+    public ResponseStatus deleteAllJwt(){
+        refreshJwtTokenRepository.deleteAll();
 
         return ResponseStatus.OK;
     }

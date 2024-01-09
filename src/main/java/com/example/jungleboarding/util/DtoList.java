@@ -19,6 +19,13 @@ public class DtoList<E> extends ArrayList implements DataTransferObject, Respons
         }
     }
 
+    public <T> DtoList(DtoList<Object> anyList){
+        for (Object elem : anyList){
+            this.add(elem);
+        }
+    }
+
+
 
     @Override
     public Object toEntity()

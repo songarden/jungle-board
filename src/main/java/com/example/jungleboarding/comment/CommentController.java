@@ -19,7 +19,7 @@ public class CommentController {
     @ResponseBody
     @GetMapping("/board-id")
     public Response<CommentDto> apiGetAllCmtByBoardId(@RequestParam("v") Integer boardId){
-        DtoList<CommentDto> cmtDtoList = commentService.getAllCmtByBoardId(boardId);
+        DtoList<CommentDto> cmtDtoList = new DtoList<>(commentService.getAllCmtByBoardId(boardId));
         return cmtDtoList.toResponse();
     }
 

@@ -26,6 +26,9 @@ public class Comment {
     @Column(name = "comment_user")
     private String commentUser;
 
+    @Column(name = "comment_user_name")
+    private String commentUserName;
+
     @Column(name = "comment_board")
     private Integer commentBoard;
 
@@ -34,10 +37,11 @@ public class Comment {
     private LocalDateTime commentDate;
 
     @Builder
-    public Comment(Integer commentId, String commentContent, String commentUser, Integer commentBoard, LocalDateTime commentDate) {
+    public Comment(Integer commentId, String commentContent, String commentUser, String commentUserName, Integer commentBoard, LocalDateTime commentDate) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.commentUser = commentUser;
+        this.commentUserName = commentUserName;
         this.commentBoard = commentBoard;
         this.commentDate = commentDate;
     }

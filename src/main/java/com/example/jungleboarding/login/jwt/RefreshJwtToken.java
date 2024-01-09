@@ -28,7 +28,7 @@ public class RefreshJwtToken {
     private String userId;
 
 
-
+    @Builder
     public RefreshJwtToken(String memberId, String userId, String refreshToken) {
         this.memberId = memberId;
         this.userId = userId;
