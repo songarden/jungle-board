@@ -1,0 +1,58 @@
+.Comment{
+    /* border: 2px solid black; */
+    /* border: 1px solid red; */    
+}
+
+/* 댓글 쓰기 */
+.Comment-input-box{
+    margin: auto;
+    /* border: 1px solid red; */
+    /* width: 300px;         */
+    /* padding: 10px; */
+    display: flex;
+    align-items: center;
+}
+
+#Comment-input{
+    border: 0.5px solid black;
+    /* border-radius: 5%; */
+    /* background-color:beige; */
+    width: 600px;
+    height: 100px;
+}
+
+#Comment-post-btn{
+    height: 100px;
+}
+
+
+/* 댓글 보기 */
+
+
+.Comment-view-box{
+    margin: auto;    
+    /* border: 1px solid blue; */
+    width: 300px;
+    padding-top: 1px;
+}
+
+.CommentList{
+    border: 1px solid black;    
+}
+
+.comment-item{
+    border-bottom: 0.5px solid black;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.comment-content{
+    padding: 10px;    
+    background-color: aliceblue;
+}
+
+#Comment-btn{
+    width: 300px;
+    height: 30px;
+}

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const doLogin = async(id, password) => {
+const doLogin = async (id, password) => {
     try {
-        const response = await axios.post('api/sign/login', {
-            userId: id, 
+        const response = await axios.post('http://54.180.149.138:8080/api/sign/login', {
+            userId: id,
             userInfo: password,
         });
         return response.data; // 서버 응답 반환

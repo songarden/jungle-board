@@ -1,0 +1,42 @@
+.home-title {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.number-item {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+.item-list {
+    display: flex;    
+    flex-direction: column;
+    /* 항목들을 수직(열) 방향으로 정렬 */
+    justify-content: center;
+    /* 수평 방향 중앙 정렬 */
+    align-items: center;
+    /* 수직 방향 중앙 정렬 */
+    margin: 10px;
+    padding: 10px;
+}
+
+.mypage-btn {
+    position: fixed;
+    left: 10px;
+    bottom: 50px;
+}
+
+.mypage-content-wrap{
+    /* border: 1px solid yellow;     */
+}
+
+.mypage-body-wrap{
+    /* border: 1px solid red; */
+    padding: 10px;
+}
+
+.my-item{
+    padding: 10px;    
+}

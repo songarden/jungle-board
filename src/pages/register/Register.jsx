@@ -29,11 +29,12 @@ const Register = () => {
     const handleRegister = async () => {
         if (!id || !password) {
             setError('ID와 비밀번호를 모두 입력하세요.');
+            console.log('id, pw 누락');
             return;
         }
 
         try {
-            const result = await doRegister(id, password);
+            const result = await doRegister(id, password, name, email);
             console.log('회원가입 성공', result);
             navigate('/')
         } catch {
@@ -54,20 +55,20 @@ const Register = () => {
 
     return (
         <div className="Register">
-            <h2>회원가입 페이지</h2>
+            <h2>회원가입</h2>
 
             <div className='register-box'>
-                <Input id='register-input' placeholder="ID를 입력하세요" backgroundColor={'white'}
+                <Input id='register-input-id' placeholder="ID를 입력하세요" backgroundColor={'white'}
                     value={id} onChange={onChangeId} />
 
-                <Input id='register-input' placeholder="PW를 입력하세요" backgroundColor={'white'}
+                <Input id='register-input-pw' placeholder="PW를 입력하세요" backgroundColor={'white'}
                     type='password' value={password} onChange={onChangePassword} />
 
-                <Input id='register-input' placeholder="이름을 입력하세요" backgroundColor={'white'}
-                    type='password' value={name} onChange={onChangeName} />
+                <Input id='register-input-name' placeholder="이름을 입력하세요" backgroundColor={'white'}
+                    value={name} onChange={onChangeName} />
 
-                <Input id='register-input' placeholder="이메일을 입력하세요" backgroundColor={'white'}
-                    type='password' value={email} onChange={onChangeEmail} />
+                <Input id='register-input-email' placeholder="이메일을 입력하세요" backgroundColor={'white'}
+                    value={email} onChange={onChangeEmail} />
 
                 <Button id="login-btn-1" colorScheme='purple'
                     onClick={() => { navigate("/") }}>
@@ -85,6 +86,7 @@ const Register = () => {
                         회원가입에 실패했습니다.
                     </Alert>
                 )}
+                
             </div>
         </div>
     )

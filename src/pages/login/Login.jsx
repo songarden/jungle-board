@@ -9,9 +9,9 @@ import {
   AlertDescription,
 } from '@chakra-ui/react';
 import './Login.css';
-import doLogin from '../../apis/loginApi';
+import doLogin from '../../apis/LoginApi';
 
-const Login = () => {
+const Login = ({onLoggedIn}) => {
   const navigate = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -32,14 +32,16 @@ const Login = () => {
 
     try {
       const result = await doLogin(id, password);
-      const { userId, userRoles, accessToken, refreshToken } = result.data;
+      const { memberId, userId, userRoles, accessToken, refreshToken } = result.data;
 
       // 로그인 성공
-      if (accessToken && refreshToken) {
+      if (accessToken && refreshToken && userId) {
         localStorage.setItem('access', accessToken);
         localStorage.setItem('refresh', refreshToken);
+        localStorage.setItem('memberId', memberId);
 
         navigate('/home', { replace: true });
+        onLoggedIn();
         console.log('로그인 성공');
       } else {
         setError('로그인 실패: 잘못된 사용자 정보입니다.');
@@ -55,7 +57,7 @@ const Login = () => {
     if (error) {
       timer = setTimeout(() => {
         setError(''); // 2초 후에 다시 에러 상태를 돌린다
-      }, 2000); 
+      }, 2000);
     }
     return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머도 정리
   }, [error]);
@@ -82,14 +84,14 @@ const Login = () => {
           onClick={handleLogin}>
           로그인
         </Button>
-   
+
         {error && (
           <Alert status='error'>
             <AlertIcon />
             로그인에 실패했습니다. ID 또는 PW를 확인하세요.
           </Alert>
         )}
-
+        
       </div>
     </div>
   );

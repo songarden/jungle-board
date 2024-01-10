@@ -7,7 +7,7 @@ h2{
     color: white;
     padding: 40px;
     padding-top: 100px;
-    font-size: 60px;
+    font-size: 60px;    
     font-weight: bolder;
     text-align: center;
 }
@@ -16,7 +16,11 @@ h2{
 text-align: right;
 }
 
-#register-input{
+#register-input-id, 
+#register-input-pw,
+#register-input-name,
+#register-input-email
+{
     margin-top: 20px;
     margin-bottom: 10px;
 }

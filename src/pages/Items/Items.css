@@ -1,0 +1,33 @@
+.item-and-comment{
+    max-width: 500px;    
+    padding: 20px;
+}
+
+.Item{    
+    /* border: 1px solid black;      */
+}
+
+.info{
+    background-color: black;
+    color: white;    
+}
+
+.title{
+    font-size: larger;
+    font-weight: bold;
+}
+
+.date{
+    color:beige;
+}
+
+.content{
+    background-color: white;
+    height: 100px;
+}
+
+.content-textarea{
+    background-color: aliceblue;
+    width: 100%;
+    height: 100%;
+}

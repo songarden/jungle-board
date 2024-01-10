@@ -1,0 +1,29 @@
+.CreateBoard{
+    margin: 10px;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.CreateBoard-title {
+    /* padding-top: 0px; */
+}
+
+.CreateBoard-content {
+    padding-top: 20px;
+}
+
+#CreateBoard-title-id{    
+    border: 1px solid black;
+    width: 400px;
+    height: 40px;
+    font-size: larger;
+    padding: 10px;
+}
+
+#CreateBoard-content-id{
+    /* margin: 20px; */
+    border: 1px solid black;
+    padding: 10px;
+    width: 400px;
+    height: 400px;
+}

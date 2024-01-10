@@ -1,8 +1,10 @@
 .App {  
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: rgb(73, 68, 68);
+  /* height: 100vh; */
+  height: 3000px;
+  /* background-color: rgb(73, 68, 68); */
+  background: linear-gradient(to top, rgb(23, 23, 23), rgb(73, 68, 68));  
 }
 
 .Header {  
